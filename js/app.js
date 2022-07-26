@@ -20,6 +20,8 @@ function eventListeners() {
     email.addEventListener('blur', validarFormulario);
     asunto.addEventListener('blur', validarFormulario);
     mensaje.addEventListener('blur', validarFormulario);
+    //enviar correo
+    formulario.addEventListener('submit', enviarCorreo);
 }
 
 //funciones
@@ -117,4 +119,54 @@ function mostrarMensaje( mensaje ) {
         formulario.appendChild( mensajeError );    
     }
 
+}
+
+//enviar mensaje/correo
+function enviarCorreo( e ) {
+    //PREVENIR EL REFRESH DE LA PAGINA
+    e.preventDefault();
+    //spinner
+    const spinner = document.querySelector('#spinner');
+    //mostramos el spinner
+    spinner.style.display = 'flex';
+
+    //quitamos despues de 3 segundos
+    setTimeout(() => {
+        //quitamos el spinner
+        spinner.style.display = 'none';
+        //mostramos mensaje
+        const parrafo = document.createElement('p');
+        //añadimos clases
+        parrafo.classList.add('text-center', 'my-10', 'p-2', 'bg-green-500', 'text-white', 'font-bold', 'uppercase')
+        //añadimos texto
+        parrafo.textContent = 'MENSAJE ENVIADO';
+        //renderizamos el mensaje
+        formulario.insertBefore(parrafo, spinner);
+
+        //quitamos mensaje despues de 4 segundos
+        setTimeout(() => {
+            //quitar mensaje
+            parrafo.remove();
+            //reseteamos el formulario
+            resetearFormulario();
+        }, 4000);
+
+    }, 3000);
+}
+//resetear el formulario
+function resetearFormulario() {
+    //reseteo
+    formulario.reset();
+    //inicar app
+    iniciarApp();
+    //quitar clases
+    if ( email.classList.contains('border-green-500') || 
+        asunto.classList.contains('border-green-500') ||
+        mensaje.classList.contains('border-green-500')) {
+        
+            email.classList.remove('border', 'border-green-500');
+            asunto.classList.remove('border', 'border-green-500');
+            mensaje.classList.remove('border', 'border-green-500');
+
+    }
 }
