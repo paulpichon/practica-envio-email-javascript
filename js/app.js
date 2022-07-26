@@ -33,12 +33,54 @@ function validarFormulario( e ) {
     //console.log( e.target.value.length );
     //validamos que no esten vacios los campos
     if ( e.target.value.length > 0) {
-        console.log("hay algo");
+        
+        //quitamos mensaje
+        const error = document.querySelector('.error');
+        if ( error ) {
+            error.remove();
+        }
+
+        //quitamos clases de error
+        e.target.classList.remove('border', 'border-red-500');
+        //agregamos clases de error
+        e.target.classList.add('border', 'border-green-500');
+        
     }else {
+        //quitamos clases de success
+        e.target.classList.remove('border', 'border-green-500');
         //agregamos clases de error
         e.target.classList.add('border', 'border-red-500');
         //lo enviamos a funcion para mostrar mensaje
         mostrarMensaje('TODOS LOS CAMPOS SON OBLIGATORIOS');
+    }
+    //validar correo
+    if ( e.target.type === 'email' ) {
+        //expresion regular
+        const er = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
+        //validar que sea un correo
+        if ( er.test( e.target.value ) ) {
+            
+            //quitamos mensaje
+            const error = document.querySelector('.error');
+
+            if ( error ) {
+                error.remove();
+            }
+
+            //quitamos clases de error
+            e.target.classList.remove('border', 'border-red-500');
+            //agregamos clases de error
+            e.target.classList.add('border', 'border-green-500');
+            
+        }else{
+            //quitamos clases de success
+            e.target.classList.remove('border', 'border-green-500');
+            //agregamos clases de error
+            e.target.classList.add('border', 'border-red-500');
+            //lo enviamos a funcion para mostrar mensaje
+            mostrarMensaje('EMAIL INVALIDO');    
+        }
     }
 
 }
