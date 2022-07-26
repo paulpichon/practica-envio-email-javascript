@@ -6,6 +6,9 @@ const asunto = document.querySelector('#asunto');
 const mensaje = document.querySelector('#mensaje');
 //formuario
 const formulario = document.querySelector('#enviar-mail');
+//expresion regular
+const er = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
 
 //eventListeners
 eventListeners();
@@ -55,9 +58,7 @@ function validarFormulario( e ) {
     }
     //validar correo
     if ( e.target.type === 'email' ) {
-        //expresion regular
-        const er = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-
+    
         //validar que sea un correo
         if ( er.test( e.target.value ) ) {
             
@@ -81,6 +82,20 @@ function validarFormulario( e ) {
             //lo enviamos a funcion para mostrar mensaje
             mostrarMensaje('EMAIL INVALIDO');    
         }
+    }
+
+    //enviar mensajes despues de validar que lso campos son correctos
+    if ( er.test( email.value ) && asunto.value !== '' && mensaje.value !== '' ) {
+        //activamos el boton enviar
+        btnEnviar.disabled = false;
+        //quitamos clases
+        btnEnviar.classList.remove('cursor-not-allowed', 'opacity-50');
+        
+    }else{
+        //desactivamos le boton enviar
+        btnEnviar.disabled = true;
+        //agregamos clases
+        btnEnviar.classList.add('cursor-not-allowed', 'opacity-50');
     }
 
 }
