@@ -2,7 +2,10 @@
 const btnEnviar = document.querySelector('#enviar');
 //variables para validar el formulario
 const email = document.querySelector('#email');
-
+const asunto = document.querySelector('#asunto');
+const mensaje = document.querySelector('#mensaje');
+//formuario
+const formulario = document.querySelector('#enviar-mail');
 
 //eventListeners
 eventListeners();
@@ -12,6 +15,8 @@ function eventListeners() {
     document.addEventListener('DOMContentLoaded', iniciarApp);
     //validar formulario
     email.addEventListener('blur', validarFormulario);
+    asunto.addEventListener('blur', validarFormulario);
+    mensaje.addEventListener('blur', validarFormulario);
 }
 
 //funciones
@@ -35,5 +40,24 @@ function validarFormulario( e ) {
         //lo enviamos a funcion para mostrar mensaje
         mostrarMensaje('TODOS LOS CAMPOS SON OBLIGATORIOS');
     }
-    
+
+}
+//creacion funcion mostrar mensajes
+function mostrarMensaje( mensaje ) {
+    //crear elemento html
+    const mensajeError = document.createElement('p');
+    //añadimos clases
+    mensajeError.classList.add('border', 'border-red-500', 'background-red-100', 'text-red-500', 
+    'p-3', 'mt-5', 'text-center', 'error');
+    //agregamos texto
+    mensajeError.textContent = mensaje;
+    //validar que solo se muetre una vez el mensaje
+    const errores = document.querySelectorAll('.error');
+    //console.log( errores.length );
+
+    if ( errores.length  === 0) {
+        //renderizamos en el html
+        formulario.appendChild( mensajeError );    
+    }
+
 }
